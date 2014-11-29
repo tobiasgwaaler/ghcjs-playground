@@ -1,0 +1,1 @@
+[ghcjs image](https://registry.hub.docker.com/u/rodney/ghcjs/)
