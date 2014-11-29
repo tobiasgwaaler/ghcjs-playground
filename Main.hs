@@ -22,6 +22,9 @@ import GHCJS.DOM.HTMLElement (
 import GHCJS.DOM.Element (
     elementOnclick
     )
+import GHCJS.DOM.EventM (
+    preventDefault
+    )
 
 
 import Lucid
@@ -29,15 +32,16 @@ import Data.Text.Lazy (toStrict)
 import Data.Text (Text)
 import Control.Monad.Trans ( liftIO )
 
-title :: String
+title :: Text
 title = "GHCJS Adventures"
 
+buttonId :: Text
 buttonId = "button"
 
 template :: Html ()
 template = do 
-    h1_ "Hey"
-    p_ [id_ buttonId] "Click me!"
+    h1_ (toHtml title)
+    a_ [id_ buttonId, href_ "#"] "Click me!"
 
 renderText' :: Html () -> Text
 renderText' = toStrict . renderText
@@ -52,6 +56,7 @@ main = do
 
     Just button <- documentGetElementById doc buttonId
     elementOnclick button $ do
+        preventDefault
         liftIO $ putStrLn "clicked!"
 
     return ()
